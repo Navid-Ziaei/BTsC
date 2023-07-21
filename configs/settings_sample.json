@@ -1,0 +1,16 @@
+{
+    "model": "btsc",
+    "task": "flicker",
+    "target_class": "color",
+    "classifier_name": "bayesian_model",
+    "combination_mode": "maxvote",
+    "feature_type": "combine",
+    "patient": "p05",
+    "experiment": "auto",
+    "debug_mode": true,
+    "load_feature": true,
+    "save_features": false,
+    "load_pretrained_model": true,
+    "num_fold": 1,
+    "test_size": 0.2
+}
