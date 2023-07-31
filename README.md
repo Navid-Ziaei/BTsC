@@ -99,11 +99,12 @@ This repository is organized as follows:
 - 
 ## Citations
 #### To cite this work:
+<br/>
 ```
-@InProceedings{bi2023,
-  title = {(B)ayesian Time-Series Classifier for Decoding Simple Visual Stimuli from Intracranial Neural Activity},
+@InProceedings{navidziaei2023,
+  title = {Bayesian Time-Series Classifier for Decoding Simple Visual Stimuli from Intracranial Neural Activity},
   author = {Navid Ziaei, Reza Saadatifard, Ali Yousefi, Behzad Nazari, Sydney S. Cash, Angelique C. Paulk},
-  url = {[https://arxiv.org/abs/2206.03992](https://arxiv.org/abs/2307.15672)},
+  url = {https://arxiv.org/abs/2307.15672},
   booktitle = {Brain Informatics},
   year = {2023},
 }
