@@ -1,3 +1,5 @@
+[![arXiv](https://img.shields.io/badge/arXiv-2206.03992-b31b1b.svg)](https://arxiv.org/abs/2307.15672)
+
 # Bayesian Time-series Classification (BTsC) Model
 Welcome to the GitHub repository for our BTsC model! This model is designed to decode visual stimuli from across the brain at a high temporal resolution by training on low-frequency and high-frequency power dynamics following image onset.
 <br/>
@@ -107,9 +109,6 @@ The code contained in this repository for BTsC is companion to the paper:
   year = {2023},
 }
 ```
-
-
-
 which should be cited for academic use of this code.  
 <br/>
 
