@@ -97,10 +97,17 @@ This repository is organized as follows:
 - 
 ## Citations
 The code contained in this repository for BTsC is companion to the paper:  
->"Bayesian Time-Series Classifier for Decoding Simple Visual Stimuli from Intracranial Neural Activity"  
->   Navid Ziaei, Reza Saadatifard, Ali Yousefi, Behzad Nazari, Sydney S. Cash, Angelique C. Paulk
->   In International Conference on Brain Informatics 2023 August 1.
->   Springer International Publishing.  
+
+```
+@InProceedings{navidziaei2023,
+  title = {Bayesian Time-Series Classifier for Decoding Simple Visual Stimuli from Intracranial Neural Activity},
+  author = {Navid Ziaei, Reza Saadatifard, Ali Yousefi, Behzad Nazari, Sydney S. Cash, Angelique C. Paulk},
+  url = {https://arxiv.org/abs/2307.15672},
+  booktitle = {Brain Informatics},
+  year = {2023},
+}
+```
+
 
 
 which should be cited for academic use of this code.  
