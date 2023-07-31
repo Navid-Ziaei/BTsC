@@ -7,6 +7,7 @@ import os
 class Paths:
     def __init__(self, settings):
 
+        self.class_label_list = None
         self.folder_name = None
         self.base_path = None
         self.combination_mode = settings.combination_mode
@@ -18,7 +19,7 @@ class Paths:
         self.num_folds = settings.num_fold
 
         self.raw_dataset_path = None
-        self.interim_dataset_path = None
+        self.prepared_dataset_path = None
         self.preprocessed_dataset_path = None
 
         self.path_dataset_raw = []
@@ -82,26 +83,15 @@ class Paths:
                 self.path_result.append(os.path.join(results_base_path + '/fold{}/'.format(i + 1)))
 
         if self.target_class == 'color':
-            label_class1 = 'Black'
-            label_class2 = 'White'
+            self.class_label_list = ['Black', 'White']
         elif self.target_class == 'shape':
-            label_class1 = 'Shape1'
-            label_class2 = 'Shape2'
+            self.class_label_list = ['Shape1', 'Shape2']
         elif self.target_class == 'tone':
-            label_class1 = 'Tone1'
-            label_class2 = 'Tone2'
+            self.class_label_list = ['Tone1', 'Tone2']
+        elif isinstance(self.target_class, list):
+            self.class_label_list = self.target_class
         else:
             raise ValueError('The target ' + self.target_class + ' is not defined')
-
-        self.path_dataset_erp.append(
-            self.feature_path + '/Data_' + self.task + '/' + self.patient + label_class1 + 'LowFreq.mat')
-        self.path_dataset_erp.append(
-            self.feature_path + '/Data_' + self.task + '/' + self.patient + label_class2 + 'LowFreq.mat')
-
-        self.path_dataset_hgp.append(
-            self.feature_path + '/Data_' + self.task + '/' + self.patient + label_class1 + 'HighFreq.mat')
-        self.path_dataset_hgp.append(
-            self.feature_path + '/Data_' + self.task + '/' + self.patient + label_class2 + 'HighFreq.mat')
 
         self.path_dataset_raw.append(self.raw_dataset + '/Processed/Data_' + self.task + '/' + self.patient +
                                      'data_single_file.mat')

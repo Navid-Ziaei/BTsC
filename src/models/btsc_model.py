@@ -243,9 +243,9 @@ class BTsCModel:
         prediction, prediction_probs, *_ = self.predict(x_test, num_selected_channels=num_selected_channels)
         result = {'number_of_channels': num_selected_channels,
                   'accuracy': accuracy_score(y_true=y_test, y_pred=prediction),
-                  'f1': f1_score(y_true=y_test, y_pred=prediction),
-                  'precision': precision_score(y_true=y_test, y_pred=prediction),
-                  'recall': recall_score(y_true=y_test, y_pred=prediction)}
+                  'f1': f1_score(y_true=y_test, y_pred=prediction, average='weighted'),
+                  'precision': precision_score(y_true=y_test, y_pred=prediction, average='weighted'),
+                  'recall': recall_score(y_true=y_test, y_pred=prediction, average='weighted')}
         if metric.lower() in list(result.keys()):
             return result[metric]
         else:
@@ -270,9 +270,9 @@ class BTsCModel:
         for i in range(x_test.shape[1]):
             prediction, *_ = self.predict(x_test, num_selected_channels=i + 1)
             accuracy_score_list.append(accuracy_score(y_true=y_test, y_pred=prediction))
-            f_measure_score_list.append(f1_score(y_true=y_test, y_pred=prediction))
-            recall_list.append(recall_score(y_true=y_test, y_pred=prediction))
-            precision_list.append(precision_score(y_true=y_test, y_pred=prediction))
+            f_measure_score_list.append(f1_score(y_true=y_test, y_pred=prediction, average='weighted'))
+            recall_list.append(recall_score(y_true=y_test, y_pred=prediction, average='weighted'))
+            precision_list.append(precision_score(y_true=y_test, y_pred=prediction, average='weighted'))
 
         best_idx = np.argmax(accuracy_score_list)
         best_result = {

@@ -1,4 +1,4 @@
-from src.data import EEGDataLoader
+from src.data import iEEGDataLoader, OCEDEEGDataLoader
 from src.features import FeatureExtractor
 from src.models import BTsCModel, find_best_time, train_and_evaluate_model_kfold
 from src.settings import Settings, Paths
@@ -12,13 +12,13 @@ paths = Paths(settings)
 paths.load_device_paths()
 
 # load raw data
-data_loader = EEGDataLoader(paths, settings)
+data_loader = OCEDEEGDataLoader(paths, settings)
 dataset = data_loader.load_data()
 
 # Extract Features
-feature_extractor = FeatureExtractor(dataset=dataset[1], settings=settings, feature_path=paths.feature_path)
+feature_extractor = FeatureExtractor(dataset=dataset[0], settings=settings, feature_path=paths.feature_path)
 time_features, features, labels, feature_name = feature_extractor.extract_BTsC_feature()
-trial_idx = dataset[1].trial_info['Trial number']
+trial_idx = dataset[0].trial_info['Trial number']
 
 # Find Best Time
 # find_best_time(features, labels, trial_idx, feature_name, time_features, settings, paths)

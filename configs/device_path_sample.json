@@ -1,5 +1,6 @@
 {
-    "raw_dataset": "D:\\Navid\\Dataset\\CLEAR\\",
-    "feature_path": "D:\\Navid\\Projects\\ieeg_classifier\\Data\\",
-    "model": "D:\\Navid\\Projects\\ieeg_classifier\\"
+    "prepared_dataset_path": "D:\\BTsC\\Dataset\\prepared\\",
+    "preprocessed_dataset_path": "D:\\BTsC\\Dataset\\preprocessed\\",
+    "feature_path": "D:\\BTsC\\Dataset\\features\\",
+    "model": "D:\\BTsC\\Model\\"
 }

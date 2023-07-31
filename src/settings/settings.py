@@ -1,5 +1,6 @@
 import json
 import os
+import warnings
 
 
 class Settings:
@@ -28,6 +29,7 @@ class Settings:
         self.__load_pretrained_model = False
         self.__num_fold = 5
         self.__test_size = 0.2
+        self.__file_format = '.pkl'
 
         if not isinstance(target_class, str):
             raise ValueError('"target_class" must be string!')
@@ -88,6 +90,17 @@ class Settings:
                                                                                self.feature_type,
                                                                                self.combination_mode))
 
+    @property
+    def file_format(self):
+        return self.__file_format
+
+    @file_format.setter
+    def file_format(self, format_name):
+        if isinstance(format_name, str) and format_name[0]=='.':
+            self.__file_format = format_name
+        else:
+            raise ValueError(f"file_format should be a string starting with . (.pkl, .mat, and etc.) "
+                             f"but we got {format_name}")
     @property
     def num_fold(self):
         return self.__num_fold
@@ -163,7 +176,10 @@ class Settings:
         if experimente_mode.lower() == 'all':
             self.__experiment = None
         elif experimente_mode.lower() == 'auto':
-            self.__experiment = self.__supported_experiments[self.patient]
+            if self.patient in self.__supported_experiments:
+                self.__experiment = self.__supported_experiments[self.patient]
+            else:
+                self.__experiment = None
 
     @property
     def feature_type(self):
@@ -216,7 +232,6 @@ class Settings:
     @patient.setter
     def patient(self, patient_list):
         self.__patient = patient_list
-        self.__experiment = self.__supported_experiments[patient_list]
 
     @property
     def data_labels(self):
@@ -231,5 +246,7 @@ class Settings:
         if task_name in self.__supported_task:
             self.__task = task_name
         else:
-            print(f'No task specified with name {task_name} please use one of supported tasks: {self.__supported_task}')
+            self.__task = task_name
+            print(f'Warning No task specified with name {task_name} please use one of supported tasks: '
+                  f'{self.__supported_task}. Task is set to {task_name}')
 

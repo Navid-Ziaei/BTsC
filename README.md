@@ -27,9 +27,9 @@ Understanding how external stimuli are encoded in distributed neural activity is
 
 3. Prepare your dataset
 
-4. Set the `./cinfigs/settings.json` according to `./cinfigs/settings_sample.json`
+4. Create the `./configs/settings.json` according to `./cinfigs/settings_sample.json`
 
-5. Set the `./cinfigs/device_path.json` according to `./cinfigs/device_path_sample.json`
+5. Create the `./configs/device_path.json` according to `./cinfigs/device_path_sample.json`
 
 6. Run the `main.py` script to execute the BTsC model.
 
@@ -67,7 +67,10 @@ results, best_results, df_error_analysis = train_and_evaluate_model_kfold(model,
 <br/>
 
 ## Reading in Data
-To read data ...
+To load data, you need to put data in specific format. 
+1. Define the dataset_name, patient, 
+2. Put Your dataset in the following format
+`Path to dataset/preared_dataset/task_name/patient_name/block_file_name.format`
 <br/>
 
 ## Repository Structure
@@ -94,10 +97,11 @@ This repository is organized as follows:
 - 
 ## Citations
 The code contained in this repository for BTsC is companion to the paper:  
-> "Bayesian Time-Series Classifier for Decoding Simple Visual Stimuli from Intracranial Neural Activity"  
+>"Bayesian Time-Series Classifier for Decoding Simple Visual Stimuli from Intracranial Neural Activity"  
 >   Navid Ziaei, Reza Saadatifard, Ali Yousefi, Behzad Nazari, Sydney S. Cash, Angelique C. Paulk
->    August 1, 2023
->    Brain informatics 2023 
+>   In International Conference on Brain Informatics 2023 August 1.
+>   Springer International Publishing.  
+
 
 which should be cited for academic use of this code.  
 <br/>

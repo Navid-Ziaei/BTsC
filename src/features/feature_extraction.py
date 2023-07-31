@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from scipy import signal
 from src.data import PreProcessing
 from pathlib import Path
@@ -49,7 +50,7 @@ class FeatureExtractor:
                                            method='iir',
                                            trans_bandwidth=3.0,
                                            mt_bandwidth=None)
-            preprocessor.filter_data_mne(low_cutoff=0.1, high_cutoff=250)
+            preprocessor.filter_data_mne(low_cutoff=0.1, high_cutoff=250, method='iir')
             preprocessed_dataset = preprocessor.dataset
 
             """dataviz = DataVisualizer(preprocessor.dataset)
@@ -63,7 +64,13 @@ class FeatureExtractor:
             time_features, erp_features = self.extract_ERP_features(t_min=0, t_max=t_max)
             hgp_features = self.extract_HGP_features(t_min=0, t_max=t_max,
                                                      window_size=time_features[1] - time_features[0])
-            labels = preprocessed_dataset.label.values.astype('int')
+            if isinstance(preprocessed_dataset.label, pd.DataFrame):
+                labels = preprocessed_dataset.label.values.astype('int')
+            elif isinstance(preprocessed_dataset.label, list):
+                labels = np.array(preprocessed_dataset.label).astype('int')
+            else:
+                labels = preprocessed_dataset.label.astype('int')
+
             if self.save_features is True:
                 Path(folder_path).mkdir(parents=True, exist_ok=True)
                 np.save(file_path + '_time_features.npy', time_features)
@@ -79,8 +86,10 @@ class FeatureExtractor:
             features = hgp_features[:, :, :-1] / np.max(hgp_features[:, :, :-1], axis=(0, 2), keepdims=True)
             feature_name = [ch + '_HGP' for ch in self.channel_name]
         else:
-            erp_features = erp_features / np.max(erp_features, axis=(0, 2), keepdims=True)
-            hgp_features = hgp_features / np.max(hgp_features, axis=(0, 2), keepdims=True)
+            erp_features = erp_features / np.quantile(erp_features, 0.99, axis=(0, 2), keepdims=True)
+            hgp_features = hgp_features / np.quantile(hgp_features, 0.99, axis=(0, 2), keepdims=True)
+            erp_features[erp_features > 1] = 1
+            hgp_features[hgp_features > 1] = 1
             features = np.concatenate([erp_features, hgp_features[:, :, :-1]], axis=1)
             feature_name = [ch + '_ERP' for ch in self.channel_name]
             feature_name.extend([ch + '_HGP' for ch in self.channel_name])

@@ -5,6 +5,7 @@ from scipy import stats, signal
 import matplotlib
 import seaborn
 from scipy.stats import multivariate_normal
+import pandas as pd
 
 # Visualize throgh time
 font = {'family': 'Times New Roman',
@@ -18,14 +19,20 @@ seaborn.set(style="white", color_codes=True)
 
 
 class DataVisualizer:
-    def __init__(self, data):
+    def __init__(self, data, label_name=None):
         self.fs = data.fs
         self.time = data.time
-        self.label = data.label
+        if isinstance(data.label, pd.DataFrame):
+            self.label = data.label.values.astype(int)
+        else:
+            self.label = data.label.astype(int)
         self.channel_name = data.channel_name
-        self.label_name = ['Black', 'White']
+        if label_name is None:
+            self.label_name = [str(i) for i in range(len(np.unique(self.label)))]
+        else:
+            self.label_name = label_name
 
-    def plot_single_channel_data(self, data, trial_idx, channel_idx, t_min=None, t_max=None, ax=None):
+    def plot_single_channel_data(self, data, trial_idx, channel_idx, t_min=None, t_max=None, ax=None, alpha=1, color=None):
         """
 
         :param data:
@@ -43,7 +50,7 @@ class DataVisualizer:
         if ax is None:
             fig, ax = plt.subplots(1, 1)
 
-        ax.plot(self.time[start_idx:end_idx], data[trial_idx, channel_idx, start_idx:end_idx])
+        ax.plot(self.time[start_idx:end_idx], data[trial_idx, channel_idx, start_idx:end_idx], alpha=alpha, color=color)
         ax.set_xlabel("Time (second)")
         ax.set_ylabel("Amplitude")
         ax.set_title(self.channel_name[channel_idx] + ' Label = ' + self.label_name[self.label[trial_idx]])
