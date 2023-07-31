@@ -96,7 +96,7 @@ This repository is organized as follows:
 
 - `/visualization`: Contains the `vizualize_utils.py` script for data and result visualization.
 <br/>
-- 
+
 ## Citations
 The code contained in this repository for BTsC is companion to the paper:  
 
