@@ -172,8 +172,8 @@ class BTsCModel:
             selected_classifier_error_analysis.append(trial_error)
 
         selected_channel_names = [channel_names[ch] for ch in self.selected_channels]
-        error_analysis = pd.DataFrame(np.stack(selected_classifier_error_analysis, axis=0),
-                                      index=selected_channel_names, columns=trial_idx_test)
+        #error_analysis = pd.DataFrame(np.stack(selected_classifier_error_analysis, axis=0),
+        #                              index=selected_channel_names, columns=trial_idx_test)
 
         # Calculate accuracy values for different number of selected channels
         accuracy_train, accuracy_test = [], []
@@ -205,7 +205,7 @@ class BTsCModel:
                                   'Combination Accuracy test': accuracy_test})
 
         df_result = df_result.set_index('Channel Name')
-        df_result = df_result.join(error_analysis)
+        #df_result = df_result.join(error_analysis)
 
         return history, df_result
 
@@ -402,7 +402,7 @@ class BTsCModel:
 
                 single_channel_accuracies.append(
                     (n_features, np.mean(inner_accuracies), np.std(inner_accuracies),
-                     np.concatenate([np.round(np.abs(y_val_pred_list[i] - y_val_list[i]), 2)
+                     np.concatenate([np.round(np.squeeze(np.abs(y_val_pred_list[i]) - np.squeeze(y_val_list[i])), 2)
                                      for i in range(len(y_val_list))], axis=0),
                      np.concatenate(trial_idx_valid_list, axis=0)))
 
@@ -502,7 +502,8 @@ class BTsCModel:
 
             if self.error_analysis_mode is True:
                 self.report_model_error[f'outer fold {outer_fold_idx}'] = pd.DataFrame(np.round(np.abs(
-                    np.stack(y_true_per_channel_per_fold) - np.stack(probs_per_channel_per_fold)), 2),
+                    np.squeeze(np.stack(y_true_per_channel_per_fold)) -
+                    np.squeeze(np.stack(probs_per_channel_per_fold))), 2),
                     columns=trial_idx_valid_outer)
                 self.report_model_error[f'outer fold {outer_fold_idx}'].insert(
                     0, "Channel index", self.report_model_error[f'outer fold {outer_fold_idx}'].index)

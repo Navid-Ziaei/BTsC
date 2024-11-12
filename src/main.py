@@ -12,7 +12,7 @@ paths = Paths(settings)
 paths.load_device_paths()
 
 # load raw data
-data_loader = OCEDEEGDataLoader(paths, settings)
+data_loader = iEEGDataLoader(paths, settings)
 dataset = data_loader.load_data()
 
 # Extract Features
